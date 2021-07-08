@@ -1,0 +1,35 @@
+@import '../../styles/default';
+
+.Search {
+  width: 100%;
+
+  form {
+    width: 87%;
+    max-width: 500px;
+    display: flex;
+    align-items: center;
+    margin: auto;
+
+    .search__icon {
+      position: absolute;
+      padding: 0 0.8rem;
+      fill: $yellowSoft;
+    }
+    input {
+      box-shadow: $BiggerShadow;
+      font-size: 1rem;
+      width: 100%;
+      background: $DarkGrey;
+      font-weight: 400;
+      padding: 0.5rem 2.5rem;
+      border-radius: 10px;
+      border: 2px solid $DarkGrey;
+      color: white;
+      &:focus-visible {
+        outline: none;
+        border: 3px solid $yellowSoft;
+        padding: 0.425rem 2.25rem;
+      }
+    }
+  }
+}

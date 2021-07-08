@@ -1,0 +1,67 @@
+/* COLORS */
+$yellowSoft: rgb(255, 209, 110);
+$DarkGrey: #131313;
+
+/* Box Shadow */
+$defaultShadow: 0px 11px 20px 0px rgba(0, 0, 0, 0.1);
+
+/* Bigger Shadow */
+$BiggerShadow: 0px 11px 20px 0px rgba(0, 0, 0, 0.5);
+
+/* Movie card */
+
+.movieCard {
+  position: relative;
+  width: 500px;
+  padding: 18px;
+  border-radius: 21px;
+  background-size: cover;
+  background-position: center;
+  height: 50vh;
+  max-width: 80vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: $defaultShadow;
+  margin: auto;
+  margin-bottom: 1rem;
+  span {
+    font-weight: 800;
+    color: black;
+    display: flex;
+    width: fit-content;
+    border-radius: 5px;
+    padding: 0.3rem;
+    background-color: $yellowSoft;
+    box-shadow: $defaultShadow;
+    img {
+      margin-right: 4px;
+      height: 20px;
+    }
+  }
+  h1 {
+    font-weight: 600;
+    text-align: center;
+    font-size: 1.3rem;
+    margin: 0;
+    color: white;
+    padding: 0.5rem;
+    border-radius: 5px;
+    box-shadow: $defaultShadow;
+    background: rgba(0, 0, 0, 0.432);
+    box-shadow: none;
+    backdrop-filter: blur(11px);
+    -webkit-backdrop-filter: blur(11px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+  }
+}
+
+/* Back BTN */
+.backBtn {
+  padding: 0.4rem 1rem;
+  background-color: $DarkGrey;
+  color: white;
+  text-decoration: none;
+  border-radius: 10px;
+}

@@ -1,0 +1,15 @@
+@import '../../styles/default';
+
+.movies__container {
+  display: flex;
+  justify-content: center;
+  margin-top: 5vh;
+
+  h1 {
+    padding: 3rem;
+  }
+
+  .swipe {
+    position: absolute;
+  }
+}
