@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import SearchIcon from '@material-ui/icons/Search'
-import './Search.scss'
 import { useDispatch } from 'react-redux'
 import { searchMovies } from '../../actions/moviesActions'
+import './Search.scss'
 
 const Search = () => {
   const [keyWord, setKeyWord] = useState('')

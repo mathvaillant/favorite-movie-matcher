@@ -14,13 +14,16 @@
     display: flex;
     justify-content: space-evenly;
     padding: 0.5rem;
-    background: #131313;
-    -webkit-box-shadow: 0px 29px 50px -2px rgba(0, 0, 0, 0.39);
-    box-shadow: 0px 29px 50px -2px rgba(0, 0, 0, 0.9);
+    background-color: $DefaultRed;
+    text-transform: uppercase;
+    box-shadow: $defaultShadow;
     a {
       color: #dedede;
       text-decoration: none;
-      font-weight: 500;
+      font-weight: 300;
+      &:hover {
+        font-weight: 900;
+      }
 
       svg {
         fill: white;

@@ -13,8 +13,8 @@ import {
   DISLIKE_MOVIE_REQUEST,
   DISLIKE_MOVIE_SUCCESS,
   DISLIKE_MOVIE_FAIL,
-  REMOVE_DISLIKE_FROM_STORAGE,
-  REMOVE_LIKE_FROM_STORAGE,
+  DISLIKE_MOVIE_REMOVE,
+  LIKE_MOVIE_REMOVE,
 } from '../types/movieTypes'
 
 const API_KEY = '3f6918684a78fbbcfec2516649550954'
@@ -29,7 +29,6 @@ export const listMovies = () => async (dispatch) => {
       `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}`
     )
 
-    // Get all liked or disliked movies from LocalStorage
     const LikesStored = localStorage.getItem('likedMovies')
       ? JSON.parse(localStorage.getItem('likedMovies'))
       : []
@@ -38,10 +37,8 @@ export const listMovies = () => async (dispatch) => {
       ? JSON.parse(localStorage.getItem('dislikedMovies'))
       : []
 
-    // Merge both arrays
     const AllStored = LikesStored.concat(DislikesStored)
 
-    // Create an array from AllStored with only each movie id
     let ArrayIdFromStorage = []
 
     AllStored.forEach((item) => {
@@ -49,7 +46,6 @@ export const listMovies = () => async (dispatch) => {
     })
 
     if (ArrayIdFromStorage !== null) {
-      // filter movies where ArrayIdFromStorage does not contain any new movie.id
       const FitleredMovies = data.results.filter(
         (movie) => !ArrayIdFromStorage.includes(movie.id)
       )
@@ -211,31 +207,27 @@ export const dislikeMovies = (id) => async (dispatch) => {
 }
 
 export const removeLikeFromStorage = (id) => (dispatch) => {
-  let likedArray = JSON.parse(localStorage.getItem('likedMovies'))
+  const likedArray = JSON.parse(localStorage.getItem('likedMovies'))
 
   const likedArrayFiltered = likedArray.filter((movie) => movie.id !== id)
 
-  dispatch({
-    type: REMOVE_LIKE_FROM_STORAGE,
-    payload: likedArrayFiltered,
-  })
-
   localStorage.setItem('likedMovies', JSON.stringify(likedArrayFiltered))
 
-  window.location.reload()
+  dispatch({
+    type: LIKE_MOVIE_REMOVE,
+    payload: likedArrayFiltered,
+  })
 }
 
 export const removeDislikeFromStorage = (id) => (dispatch) => {
-  let dislikedArray = JSON.parse(localStorage.getItem('dislikedMovies'))
+  const dislikedArray = JSON.parse(localStorage.getItem('dislikedMovies'))
 
   const dislikedArrayFiltered = dislikedArray.filter((movie) => movie.id !== id)
 
   dispatch({
-    type: REMOVE_DISLIKE_FROM_STORAGE,
+    type: DISLIKE_MOVIE_REMOVE,
     payload: dislikedArrayFiltered,
   })
 
   localStorage.setItem('dislikedMovies', JSON.stringify(dislikedArrayFiltered))
-
-  window.location.reload()
 }

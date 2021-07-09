@@ -1,31 +1,53 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { removeDislikeFromStorage } from '../actions/moviesActions'
+import { useAlert } from 'react-alert'
 import Spinner from '../components/Spinner/Spinner'
-import EmptyList from '../components/EmptyList/EmptyList'
 import Movie from '../components/Movie/Movie'
-import Remove from '../components/Remove'
+import EmptyList from '../components/EmptyList/EmptyList'
+import CloseIcon from '@material-ui/icons/Close'
+import Broken from '../images/broken.png'
+import '../styles/_default.scss'
 
-const Likes = () => {
+const Dislikes = () => {
+  const dispatch = useDispatch()
+  const alert = useAlert()
+
   const moviesDislike = useSelector((state) => state.moviesDislike)
   const { loading, dislikedMovies } = moviesDislike
 
+  const removeButtonHandler = (id) => {
+    dispatch(removeDislikeFromStorage(id))
+    alert.success('Successfuly removed!')
+  }
+
   return (
-    <div className='Dislikes' style={{ paddingBottom: '1rem' }}>
-      <h1>Wall of Shame 🥴👎 </h1>
+    <div className='Dislikes'>
+      <h2>
+        Wall Of Shame <br />
+        <img width='30px' height='30px' src={Broken} alt='' />
+      </h2>
       {loading && <Spinner />}
       {dislikedMovies.length !== 0 ? (
-        dislikedMovies.map((movie) => (
-          <>
-            <Remove id={movie.id} likeDislike={'dislike'} />
-            <Movie
-              key={movie.id}
-              backdrop_path={movie.backdrop_path}
-              poster_path={movie.poster_path}
-              title={movie.title}
-              vote_average={movie.vote_average}
-            />
-          </>
-        ))
+        <div className='Dislikes__inner'>
+          {dislikedMovies?.map((movie) => (
+            <div key={movie.id}>
+              <button className='removeBtn'>
+                <CloseIcon
+                  onClick={() => {
+                    removeButtonHandler(movie.id)
+                  }}
+                />
+              </button>
+              <Movie
+                backdrop_path={movie.backdrop_path}
+                poster_path={movie.poster_path}
+                title={movie.title}
+                vote_average={movie.vote_average}
+              />
+            </div>
+          ))}
+        </div>
       ) : (
         <EmptyList />
       )}
@@ -33,4 +55,4 @@ const Likes = () => {
   )
 }
 
-export default Likes
+export default Dislikes

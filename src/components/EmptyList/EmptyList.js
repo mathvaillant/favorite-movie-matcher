@@ -5,7 +5,7 @@ import './EmptyList.scss'
 const EmptyList = () => {
   return (
     <>
-      <span>
+      <span className='EmptyList'>
         <h4>This list is empty</h4>
         <Link to='/' className='backBtn'>
           Go Back

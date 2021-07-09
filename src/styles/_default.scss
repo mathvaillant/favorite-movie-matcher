@@ -1,12 +1,21 @@
 /* COLORS */
 $yellowSoft: rgb(255, 209, 110);
 $DarkGrey: #131313;
+$LightGrey: #717171;
+$DefaultRed: #ff002d;
 
 /* Box Shadow */
-$defaultShadow: 0px 11px 20px 0px rgba(0, 0, 0, 0.1);
-
-/* Bigger Shadow */
+$defaultShadow: 0px 11px 20px 0px rgba(97, 97, 97, 0.006);
 $BiggerShadow: 0px 11px 20px 0px rgba(0, 0, 0, 0.5);
+$RedShadowFocus: 2px 4px 9px 0px #ff002f50;
+$BlackTopShadow: 0px -20px 20px 0px black;
+
+/* Positioning */
+.centerAbsolute {
+  position: absolute;
+  transform: translate(-50%, 0);
+  left: 50%;
+}
 
 /* Movie card */
 
@@ -22,22 +31,31 @@ $BiggerShadow: 0px 11px 20px 0px rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: $defaultShadow;
+  box-shadow: none;
   margin: auto;
   margin-bottom: 1rem;
-  span {
+  box-shadow: 0px 7px 0px 0px rgba(255, 80, 80, 0.2);
+  .span0 {
+    min-width: 24px;
     font-weight: 800;
-    color: black;
+    font-size: 1.2rem;
+    color: white;
     display: flex;
+    justify-content: center;
     width: fit-content;
-    border-radius: 5px;
-    padding: 0.3rem;
-    background-color: $yellowSoft;
+    border-radius: 50%;
+    padding: 0.5rem;
+    border: 2px solid#ff5f5f;
+    background-color: rgba(0, 0, 0, 0.568);
     box-shadow: $defaultShadow;
-    img {
-      margin-right: 4px;
-      height: 20px;
-    }
+  }
+  .span5 {
+    @extend .span0;
+    border: 2px solid#fffc51;
+  }
+  .span10 {
+    @extend .span0;
+    border: 2px solid#56ff47;
   }
   h1 {
     font-weight: 600;
@@ -57,11 +75,99 @@ $BiggerShadow: 0px 11px 20px 0px rgba(0, 0, 0, 0.5);
   }
 }
 
+.movieCardMiddle {
+  @extend .movieCard;
+  transform: scale(0.96);
+  box-shadow: 0px 25px 0px 0px rgba(255, 80, 80, 0.02);
+}
+
+.movieCardBack {
+  @extend .movieCard;
+  transform: scale(0.9);
+  box-shadow: 0px 50px 0px 0px rgba(255, 80, 80, 0.01);
+}
+
 /* Back BTN */
 .backBtn {
   padding: 0.4rem 1rem;
-  background-color: $DarkGrey;
+  background-color: $LightGrey;
   color: white;
   text-decoration: none;
   border-radius: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  box-shadow: $defaultShadow;
+}
+
+/* HOME */
+.Home {
+  .logo {
+    margin: 2rem;
+  }
+}
+
+/* LIKEs */
+.Likes {
+  min-height: 100vh;
+  overflow-y: scroll;
+  h2 {
+    font-size: 2rem;
+    @extend .centerAbsolute;
+  }
+  .Likes__inner {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: flex-end;
+    position: relative;
+    margin-top: 15vh;
+    min-height: 74vh;
+    width: 100%;
+    box-shadow: $BlackTopShadow;
+    padding: 2rem 0rem 3rem 0rem;
+    border-radius: 30px;
+    background: rgb(255, 0, 45);
+    background: linear-gradient(
+      150deg,
+      rgba(255, 0, 45, 1) 24%,
+      rgba(255, 123, 146, 1) 73%
+    );
+    z-index: 10;
+    div:last-child {
+      box-shadow: none;
+    }
+  }
+}
+
+/* DISLIKES */
+.Dislikes {
+  @extend .Likes;
+  h2 {
+    font-size: 2rem;
+    @extend .centerAbsolute;
+  }
+  .Dislikes__inner {
+    @extend .Likes__inner;
+    background: rgb(47, 47, 47);
+    background: linear-gradient(
+      150deg,
+      rgba(47, 47, 47, 1) 36%,
+      rgba(103, 103, 103, 1) 72%
+    );
+    div:last-child {
+      box-shadow: none;
+    }
+  }
+}
+
+/* REMOVE BTN */
+.removeBtn {
+  position: relative;
+  left: 0;
+  top: 15px;
+  margin-bottom: -0.7rem;
+  padding: 0.37rem 0.56rem;
+  background-color: black;
+  color: white;
+  border-radius: 50%;
+  z-index: 1000;
 }

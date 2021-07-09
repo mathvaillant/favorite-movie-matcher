@@ -9,13 +9,11 @@ import {
   LIKE_MOVIE_REQUEST,
   LIKE_MOVIE_SUCCESS,
   LIKE_MOVIE_FAIL,
-  LIKE_MOVIE_RESET,
   DISLIKE_MOVIE_REQUEST,
   DISLIKE_MOVIE_SUCCESS,
   DISLIKE_MOVIE_FAIL,
-  DISLIKE_MOVIE_RESET,
-  REMOVE_LIKE_FROM_STORAGE,
-  REMOVE_DISLIKE_FROM_STORAGE,
+  LIKE_MOVIE_REMOVE,
+  DISLIKE_MOVIE_REMOVE,
 } from '../types/movieTypes'
 
 export const listMoviesReducer = (state = { moviesList: [] }, action) => {
@@ -83,8 +81,11 @@ export const likeMovieReducer = (state = { likedMovies: [] }, action) => {
         loading: false,
         error: action.payload,
       }
-    case LIKE_MOVIE_RESET:
-      return {}
+    case LIKE_MOVIE_REMOVE:
+      return {
+        loading: false,
+        likedMovies: action.payload,
+      }
     default:
       return state
   }
@@ -108,36 +109,9 @@ export const dislikeMovieReducer = (state = { dislikedMovies: [] }, action) => {
         loading: false,
         error: action.payload,
       }
-    case DISLIKE_MOVIE_RESET:
-      return {}
-    default:
-      return state
-  }
-}
-
-export const removeLikeFromStorageReducer = (
-  state = { likedMovies: [] },
-  action
-) => {
-  switch (action.type) {
-    case REMOVE_LIKE_FROM_STORAGE:
+    case DISLIKE_MOVIE_REMOVE:
       return {
-        ...state,
-        likedMovies: action.payload,
-      }
-    default:
-      return state
-  }
-}
-
-export const removeDislikeFromStorageReducer = (
-  state = { dislikedMovies: [] },
-  action
-) => {
-  switch (action.type) {
-    case REMOVE_DISLIKE_FROM_STORAGE:
-      return {
-        ...state,
+        loading: false,
         dislikedMovies: action.payload,
       }
     default:

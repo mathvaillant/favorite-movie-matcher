@@ -6,11 +6,11 @@ import './Options.scss'
 const Options = () => {
   return (
     <div className='Options'>
-      <div className='Options__inner'>
+      <nav className='Options__inner'>
         <Link to='/'>Home</Link>
         <Link to='/likes'>Favorites</Link>
         <Link to='/dislikes'>Wall of Shame</Link>
-      </div>
+      </nav>
     </div>
   )
 }

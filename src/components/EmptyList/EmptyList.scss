@@ -2,12 +2,10 @@
 
 .EmptyList {
   padding-bottom: 1rem;
-  span {
-    h4 {
-      margin-bottom: 10px;
-    }
-    a {
-      @extend .backBtn;
-    }
+  h4 {
+    margin-top: 10rem;
+  }
+  a {
+    @extend .backBtn;
   }
 }

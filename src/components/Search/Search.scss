@@ -2,7 +2,6 @@
 
 .Search {
   width: 100%;
-
   form {
     width: 87%;
     max-width: 500px;
@@ -13,22 +12,23 @@
     .search__icon {
       position: absolute;
       padding: 0 0.8rem;
-      fill: $yellowSoft;
+      fill: $LightGrey;
     }
     input {
       box-shadow: $BiggerShadow;
       font-size: 1rem;
       width: 100%;
-      background: $DarkGrey;
+      background: #232323;
       font-weight: 400;
-      padding: 0.5rem 2.5rem;
-      border-radius: 10px;
-      border: 2px solid $DarkGrey;
+      padding: 0.65rem 2.5rem;
+      border-radius: 12px;
+      border: none;
       color: white;
+      transition: linear 400ms;
       &:focus-visible {
         outline: none;
-        border: 3px solid $yellowSoft;
-        padding: 0.425rem 2.25rem;
+        border: none;
+        box-shadow: $RedShadowFocus;
       }
     }
   }

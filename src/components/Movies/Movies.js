@@ -1,19 +1,19 @@
-import React, { useEffect } from 'react'
-import TinderCard from 'react-tinder-card'
-import Spinner from '../Spinner/Spinner'
-import Movie from '../Movie/Movie'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { LIST_MOVIES_RESET } from '../../types/movieTypes'
 import {
   listMovies,
   likeMovies,
   dislikeMovies,
 } from '../../actions/moviesActions'
-import { LIST_MOVIES_RESET } from '../../types/movieTypes'
+import TinderCard from 'react-tinder-card'
+import Spinner from '../Spinner/Spinner'
+import Movie from '../Movie/Movie'
+import { useAlert } from 'react-alert'
 import './Movies.scss'
 
-import { useAlert } from 'react-alert'
-
 const Movies = () => {
+  const [indexPlus, setIndexPlus] = useState(0)
   const alert = useAlert()
   const dispatch = useDispatch()
 
@@ -36,6 +36,7 @@ const Movies = () => {
   }, [SearchedMovies.length, dispatch])
 
   const swiped = (direction, movieId) => {
+    setIndexPlus((prevState) => prevState + 1)
     if (direction === 'right') {
       alert.success('LIKE! 😎🎞️')
       dispatch(likeMovies(movieId))
@@ -48,11 +49,11 @@ const Movies = () => {
   return (
     <div className='movies__container'>
       {loading && <Spinner />}
-      {error && <h3>{error.message}</h3>}
+      {error && <h2>{error.message}</h2>}
       {loadingSearch && <Spinner />}
-      {errorSearch && <h3>{errorSearch.message}</h3>}
+      {errorSearch && <h2>{errorSearch.message}</h2>}
       {moviesSearch === undefined
-        ? moviesList?.map((movie) => (
+        ? moviesList?.map((movie, index) => (
             <TinderCard
               onSwipe={(direction) => swiped(direction, movie.id)}
               key={movie.id}
@@ -65,10 +66,12 @@ const Movies = () => {
                 poster_path={movie.poster_path}
                 vote_average={movie.vote_average}
                 title={movie.title}
+                shadowIndex={index}
+                shadowIndexPlus={indexPlus}
               />
             </TinderCard>
           ))
-        : moviesSearch?.map((movie) => (
+        : moviesSearch?.map((movie, index) => (
             <TinderCard
               onSwipe={(direction) => swiped(direction, movie.id)}
               key={movie.id}
@@ -81,6 +84,8 @@ const Movies = () => {
                 poster_path={movie.poster_path}
                 vote_average={movie.vote_average}
                 title={movie.title}
+                shadowIndex={index}
+                shadowIndexPlus={indexPlus}
               />
             </TinderCard>
           ))}
