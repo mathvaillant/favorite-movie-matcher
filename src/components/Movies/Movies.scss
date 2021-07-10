@@ -12,4 +12,32 @@
   .swipe {
     position: absolute;
   }
+
+  .buttons {
+    position: absolute;
+    min-width: 240px;
+    display: flex;
+    bottom: 5rem;
+    justify-content: space-evenly;
+
+    .buttons__like {
+      border-radius: 50%;
+      border: 0;
+      padding: 0.8rem 0.9rem;
+      background-color: $DefaultRed;
+      box-shadow: $BiggerShadow;
+      fill: white;
+      width: 30px;
+      height: 30px;
+      transition: ease-in-out 200ms;
+      &:hover {
+        transform: scale(1.09);
+      }
+    }
+    .buttons__dislike {
+      @extend .buttons__like;
+      fill: $DefaultRed;
+      background-color: white;
+    }
+  }
 }

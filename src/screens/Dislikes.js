@@ -17,21 +17,26 @@ const Dislikes = () => {
   const { loading, dislikedMovies } = moviesDislike
 
   const removeButtonHandler = (id) => {
-    dispatch(removeDislikeFromStorage(id))
-    alert.success('Successfuly removed!')
+    document.querySelector(`#movie-${id}`).classList =
+      'animate__animated animate__backOutRight'
+
+    setTimeout(() => {
+      dispatch(removeDislikeFromStorage(id))
+      alert.success('Successfuly removed!')
+    }, 400)
   }
 
   return (
     <div className='Dislikes'>
       <h2>
-        Wall Of Shame <br />
+        {dislikedMovies?.length} What the F{'*'}
         <img width='30px' height='30px' src={Broken} alt='' />
       </h2>
       {loading && <Spinner />}
       {dislikedMovies.length !== 0 ? (
         <div className='Dislikes__inner'>
           {dislikedMovies?.map((movie) => (
-            <div key={movie.id}>
+            <div key={movie.id} id={`movie-${movie.id}`}>
               <button className='removeBtn'>
                 <CloseIcon
                   onClick={() => {

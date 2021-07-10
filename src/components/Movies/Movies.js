@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
+import CloseIcon from '@material-ui/icons/Close'
+import FavoriteIcon from '@material-ui/icons/Favorite'
 import { useDispatch, useSelector } from 'react-redux'
 import { LIST_MOVIES_RESET } from '../../types/movieTypes'
 import {
@@ -27,6 +29,28 @@ const Movies = () => {
     error: errorSearch,
   } = SearchedMovies
 
+  const moviesLike = useSelector((state) => state.moviesLike)
+  const { likedMovies } = moviesLike
+
+  const moviesDislike = useSelector((state) => state.moviesDislike)
+  const { dislikedMovies } = moviesDislike
+
+  const childListRefs = useMemo(
+    () =>
+      Array(moviesList?.length)
+        .fill(0)
+        .map((i) => React.createRef()),
+    [moviesList?.length]
+  )
+
+  const childSearchRefs = useMemo(
+    () =>
+      Array(moviesSearch?.length)
+        .fill(0)
+        .map((i) => React.createRef()),
+    [moviesSearch?.length]
+  )
+
   useEffect(() => {
     if (SearchedMovies.length !== 0) {
       dispatch({ type: LIST_MOVIES_RESET })
@@ -35,7 +59,7 @@ const Movies = () => {
     }
   }, [SearchedMovies.length, dispatch])
 
-  const swiped = (direction, movieId) => {
+  const touchSwipe = (direction, movieId) => {
     setIndexPlus((prevState) => prevState + 1)
     if (direction === 'right') {
       alert.success('LIKE! 😎🎞️')
@@ -43,6 +67,34 @@ const Movies = () => {
     } else {
       alert.error('NOPE! 🥴🎞️')
       dispatch(dislikeMovies(movieId))
+    }
+  }
+
+  const clickSwipe = (dir) => {
+    const AllStored = likedMovies.concat(dislikedMovies)
+
+    let AllStoredId = []
+
+    AllStored.forEach((item) => {
+      AllStoredId.push(item.id)
+    })
+
+    const moviesSearchLeft = moviesSearch?.filter(
+      (movie) => !AllStoredId?.includes(movie.id)
+    )
+
+    const moviesListLeft = moviesList?.filter(
+      (movie) => !AllStoredId?.includes(movie.id)
+    )
+
+    if (SearchedMovies.length !== 0) {
+      const toBeRated = moviesSearchLeft[moviesSearchLeft.length - 1].id
+      const index = moviesSearch?.map((movie) => movie.id).indexOf(toBeRated)
+      childSearchRefs[index].current.swipe(dir)
+    } else {
+      const toBeRated = moviesListLeft[moviesListLeft.length - 1].id
+      const index = moviesList?.map((movie) => movie.id).indexOf(toBeRated)
+      childListRefs[index].current.swipe(dir)
     }
   }
 
@@ -55,9 +107,9 @@ const Movies = () => {
       {moviesSearch === undefined
         ? moviesList?.map((movie, index) => (
             <TinderCard
-              onSwipe={(direction) => swiped(direction, movie.id)}
+              ref={childListRefs[index]}
+              onSwipe={(direction) => touchSwipe(direction, movie.id)}
               key={movie.id}
-              setClickMovieId={movie.id}
               className='swipe'
               preventSwipe={['up', 'down']}>
               <Movie
@@ -73,9 +125,9 @@ const Movies = () => {
           ))
         : moviesSearch?.map((movie, index) => (
             <TinderCard
-              onSwipe={(direction) => swiped(direction, movie.id)}
+              ref={childSearchRefs[index]}
+              onSwipe={(direction) => touchSwipe(direction, movie.id)}
               key={movie.id}
-              setClickMovieId={movie.id}
               className='swipe'
               preventSwipe={['up', 'down']}>
               <Movie
@@ -89,6 +141,17 @@ const Movies = () => {
               />
             </TinderCard>
           ))}
+      <div className='buttons'>
+        <CloseIcon
+          className='buttons__dislike'
+          onClick={() => clickSwipe('left')}
+        />
+
+        <FavoriteIcon
+          className='buttons__like'
+          onClick={() => clickSwipe('right')}
+        />
+      </div>
     </div>
   )
 }

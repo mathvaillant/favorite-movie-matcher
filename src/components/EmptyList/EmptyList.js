@@ -6,7 +6,7 @@ const EmptyList = () => {
   return (
     <>
       <span className='EmptyList'>
-        <h4>This list is empty</h4>
+        <h4>Would you like to see some options?</h4>
         <Link to='/' className='backBtn'>
           Go Back
         </Link>

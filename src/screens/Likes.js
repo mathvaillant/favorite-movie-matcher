@@ -17,8 +17,13 @@ const Likes = () => {
   const { loading, likedMovies } = moviesLike
 
   const removeButtonHandler = (id) => {
-    dispatch(removeLikeFromStorage(id))
-    alert.success('Successfuly removed!')
+    document.querySelector(`#movie-${id}`).classList =
+      'animate__animated animate__backOutRight'
+
+    setTimeout(() => {
+      dispatch(removeLikeFromStorage(id))
+      alert.success('Successfuly removed!')
+    }, 400)
   }
 
   return (
@@ -31,7 +36,7 @@ const Likes = () => {
       {likedMovies.length !== 0 ? (
         <div className='Likes__inner'>
           {likedMovies.map((movie) => (
-            <div key={movie.id}>
+            <div key={movie.id} id={`movie-${movie.id}`}>
               <button className='removeBtn'>
                 <CloseIcon
                   onClick={() => {
